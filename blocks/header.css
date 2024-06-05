@@ -1,0 +1,14 @@
+.header {
+  margin-top: 45px;
+}
+
+.header__logo {
+  width: 173px;
+  height: 33px;
+}
+
+.header__line {
+  border-bottom: 1px solid #fff;
+  display: block;
+  margin-top: 40px;
+}

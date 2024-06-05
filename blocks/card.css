@@ -1,0 +1,36 @@
+.card {
+  max-width: 282px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.card__image {
+  width: 282px;
+  height: 282px;
+  border-radius: 10px 10px 0 0;
+}
+
+.card__info {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 29px 0 19px;
+  align-items: center;
+}
+
+.card__title {
+  color: #000;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: 1.2;
+  font-weight: 900;
+  font-size: 24px;
+}
+
+.card__heart-button {
+  background: transparent url(../images/heart.svg) center no-repeat;
+  height: 18px;
+  width: 21px;
+  border: none;
+  padding: 12px;
+}
