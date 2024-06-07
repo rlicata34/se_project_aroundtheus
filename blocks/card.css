@@ -1,23 +1,16 @@
-.card__list {
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(auto, 282px));
-  grid-gap: 20px 17px;
-  justify-content: center;
-}
-
 .card {
   max-width: 282px;
   list-style-type: none;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .card__image {
   width: 282px;
   height: 282px;
   border-radius: 10px 10px 0 0;
+  object-fit: cover;
 }
 
 .card__description {
@@ -46,8 +39,9 @@
   width: 21px;
   border: none;
   padding: 12px;
+  cursor: pointer;
 }
 
 .card__like-button:hover {
-  opacity: 60%;
+  opacity: 0.5;
 }

@@ -1,0 +1,19 @@
+@media screen and (max-width: 780px) {
+  .profile__image {
+    width: 100px;
+    height: 100px;
+  }
+
+  .profile__info {
+    grid-template-columns: minmax(auto, 240px) auto;
+    grid-gap: 7px 10px;
+  }
+  .profile__title {
+    font-size: 26px;
+  }
+
+  .profile__add-button {
+    width: 100px;
+    height: 50px;
+  }
+}

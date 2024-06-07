@@ -1,0 +1,70 @@
+@media screen and (max-width: 580px) {
+  .page__content {
+    padding: 0;
+  }
+  .header {
+    max-width: 320px;
+    margin-top: 28px;
+  }
+
+  .header__logo {
+    width: 126px;
+    height: 24px;
+    margin: 0 0 32px 27px;
+  }
+
+  .profile {
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 42px;
+  }
+
+  .profile__image {
+    margin: 0 0 30px;
+  }
+
+  .profile__info {
+    margin: 0 0 36px;
+    grid-template-areas: ". title button" "description description description";
+    justify-items: center;
+    grid-template-columns: auto minmax(auto, 196px) auto;
+    grid-gap: 14px 10px;
+  }
+
+  .profile__title {
+    font-size: 22px;
+    line-height: 1.2;
+  }
+
+  .profile__description {
+    font-size: 14px;
+    line-height: 1.2;
+  }
+
+  .profile__edit-button {
+    width: 18px;
+    height: 18px;
+    border: solid #fff 1px;
+  }
+
+  .profile__add-button {
+    width: 282px;
+    height: 50px;
+    margin: 0;
+    border: solid #fff 1px;
+    background: transparent url(../images/add-icon.svg) center no-repeat;
+  }
+
+  .cards {
+    margin-top: 36px;
+  }
+
+  .footer {
+    margin: 48px auto 36px;
+  }
+
+  .footer__copyright {
+    font-size: 14px;
+    margin-left: 19px;
+  }
+}

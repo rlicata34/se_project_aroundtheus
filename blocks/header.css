@@ -1,14 +1,10 @@
 .header {
   margin-top: 45px;
+  border-bottom: rgb(84 84 84 / 0.7) solid 1px;
 }
 
 .header__logo {
   width: 173px;
   height: 33px;
-}
-
-.header__line {
-  border-bottom: 1px solid #545454;
-  display: block;
-  margin-top: 40px;
+  margin-bottom: 41px;
 }
