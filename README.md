@@ -25,5 +25,5 @@ Convert the card titles to links. Upon clicking, the user will be directing to a
 
 ## Recording from the Author
 
-Link to a recording by the author descripting the project:
+Link to a recording by the author describing the project:
 https://drive.google.com/file/d/1bARgLMh7f4IyE2ZtF4pVBCeyLoIKfk-Q/view?usp=sharing
