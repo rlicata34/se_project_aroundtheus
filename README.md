@@ -21,7 +21,7 @@ https://rlicata34.github.io/se_project_aroundtheus/
 
 ## Plan to improve
 
-Convert the card titles to links. Upon clicking, the user will be directing to a page within the same tab. This page will contain a space for the profile owner to write a description of their experience at the location posted.
+Convert the card titles to links. Upon clicking, the user will be directed to a page within the same tab. This page will contain a space for the profile owner to write a description of their experience at the location posted.
 
 ## Recording from the Author
 
