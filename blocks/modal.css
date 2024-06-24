@@ -38,6 +38,10 @@
   cursor: pointer;
 }
 
+.modal__close:hover {
+  opacity: 60%;
+}
+
 .modal__heading {
   color: #000;
   font-weight: 900;
