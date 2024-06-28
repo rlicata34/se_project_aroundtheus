@@ -1,25 +1,5 @@
 const initialCards = [
   {
-    name: "Yosemite Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-  },
-
-  {
-    name: "Lake Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
-  },
-
-  {
-    name: "Bald Mountains",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
-  },
-
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
-  },
-
-  {
     name: "Vanoise National Park",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
   },
@@ -28,25 +8,61 @@ const initialCards = [
     name: "Lago di Braies",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
   },
+
+  {
+    name: "Latemar",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
+  },
+
+  {
+    name: "Bald Mountains",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
+  },
+  {
+    name: "Lake Louise",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
+  },
+  {
+    name: "Yosemite Valley",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+  },
 ];
 
 /* -------------------------------------------------------------------------- */
 /*                                  Elements                                  */
 /* -------------------------------------------------------------------------- */
 
+/* --------------------------------- Profile -------------------------------- */
+
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
-const profileCloseButton = document.querySelector("#profile-close-button");
+const profileCloseButton = profileEditModal.querySelector(".modal__close");
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const profileEditForm = profileEditModal.querySelector(".modal__form");
-const profileTitleInput = document.querySelector("#profile-form-title");
-const profileDescriptionInput = document.querySelector(
-  "#profile-form-description"
+const profileTitleInput = profileEditForm.querySelector(
+  ".form__input_type_title"
 );
+const profileDescriptionInput = profileEditForm.querySelector(
+  ".form__input_type_description"
+);
+
+/* ---------------------------------- Card ---------------------------------- */
+
 const cardListEl = document.querySelector(".cards__list");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
+
+/* --------------------------------- newCard -------------------------------- */
+
+const newItemButton = document.querySelector("#new-item-button");
+const newItemModal = document.querySelector("#new-item-modal");
+const newItemCloseButton = newItemModal.querySelector(".modal__close");
+const newItemTitle = document.querySelector("#card-title");
+const newItemImage = document.querySelector("#card-image");
+const newItemForm = newItemModal.querySelector(".modal__form");
+const newItemTitleInput = newItemForm.querySelector(".form__input_type_title");
+const newItemLinkInput = newItemForm.querySelector(".form__input_type_link");
 
 /* -------------------------------------------------------------------------- */
 /*                                  funtions                                  */
@@ -54,6 +70,7 @@ const cardTemplate =
 
 function closePopUp() {
   profileEditModal.classList.remove("modal_opened");
+  newItemModal.classList.remove("modal_opened");
 }
 function getCardElement(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
@@ -64,6 +81,13 @@ function getCardElement(cardData) {
   cardTitleEl.textContent = cardData.name;
   return cardElement;
 }
+
+function renderCard(cardData, cardListEl) {
+  const cardElement = getCardElement(cardData);
+  cardListEl.prepend(cardElement);
+}
+
+initialCards.forEach((cardData) => renderCard(cardData, cardListEl));
 
 /* -------------------------------------------------------------------------- */
 /*                               Event Handlers                               */
@@ -85,12 +109,23 @@ profileEditButton.addEventListener("click", function () {
   profileDescriptionInput.value = profileDescription.textContent;
   profileEditModal.classList.add("modal_opened");
 });
-
 profileCloseButton.addEventListener("click", closePopUp);
-
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 
-initialCards.forEach((cardData) => {
-  cardElement = getCardElement(cardData);
-  cardListEl.append(cardElement);
+/* -------------------------------------------------------------------------- */
+/*                                Add new card                                */
+/* -------------------------------------------------------------------------- */
+
+newItemButton.addEventListener("click", () => {
+  newItemModal.classList.add("modal_opened");
 });
+newItemCloseButton.addEventListener("click", closePopUp);
+
+function handleNewItemSubmit(evt) {
+  evt.preventDefault();
+  const name = newItemTitleInput.value;
+  const link = newItemLinkInput.value;
+  renderCard({ name, link }, cardListEl);
+  closePopUp();
+}
+newItemForm.addEventListener("submit", handleNewItemSubmit);
