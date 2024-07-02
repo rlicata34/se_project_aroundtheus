@@ -166,5 +166,5 @@ newItemForm.addEventListener("submit", handleNewItemSubmit);
 /* -------------------------------------------------------------------------- */
 
 previewImageClose.addEventListener("click", () =>
-  closeModal(previewImageModal);
+  closeModal(previewImageModal)
 );
