@@ -105,6 +105,13 @@
         </form>
       </div>
     </div>
+    <div class="modal" id="preview-image-modal">
+      <div class="modal__container-image">
+        <button class="modal__close-image"></button>
+        <img src="" alt="" class="modal__image" />
+        <h3 class="modal__image-title"></h3>
+      </div>
+    </div>
     <template class="cards page__section" id="card-template">
       <ul class="cards__list">
         <li class="card">
@@ -113,6 +120,7 @@
             <h2 class="card__title" id="card-title"></h2>
             <button class="card__like-button" type="button"></button>
           </div>
+          <button class="card__delete-button"></button>
         </li>
       </ul>
     </template>
