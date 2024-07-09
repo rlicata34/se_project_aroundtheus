@@ -60,24 +60,6 @@
   position: relative;
 }
 
-.modal__close-image {
-  background: transparent url(../images/close-icon.svg) center no-repeat;
-  background-size: contain;
-  width: 40px;
-  height: 40px;
-  border: none;
-  position: absolute;
-  top: -45px;
-  right: -45px;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-}
-
-.modal__close-image:hover {
-  opacity: 60%;
-}
-
 .modal__image {
   max-width: 75vw;
   max-height: 75vh;

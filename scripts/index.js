@@ -39,14 +39,13 @@ const profileEditModal = document.querySelector("#profile-edit-modal");
 const profileCloseButton = profileEditModal.querySelector(".modal__close");
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
-const profileEditForm = profileEditModal.querySelector(".modal__form");
+const profileEditForm = document.forms["profile-form"];
 const profileTitleInput = profileEditForm.querySelector(
   ".form__input_type_title"
 );
 const profileDescriptionInput = profileEditForm.querySelector(
   ".form__input_type_description"
 );
-const modal = document.querySelectorAll(".modal");
 
 /* ---------------------------------- Card ---------------------------------- */
 
@@ -61,16 +60,14 @@ const newItemModal = document.querySelector("#new-item-modal");
 const newItemCloseButton = newItemModal.querySelector(".modal__close");
 const newItemTitle = document.querySelector("#card-title");
 const newItemImage = document.querySelector("#card-image");
-const newItemForm = newItemModal.querySelector(".modal__form");
+const newItemForm = document.forms["card-form"];
 const newItemTitleInput = newItemForm.querySelector(".form__input_type_title");
 const newItemLinkInput = newItemForm.querySelector(".form__input_type_link");
 
 /* ------------------------------ Preview image ----------------------------- */
 
 const previewImageModal = document.querySelector("#preview-image-modal");
-const previewImageClose = previewImageModal.querySelector(
-  ".modal__close-image"
-);
+const previewImageClose = previewImageModal.querySelector(".modal__close");
 const previewImage = previewImageModal.querySelector(".modal__image");
 const previewImageTitle = previewImageModal.querySelector(
   ".modal__image-title"
@@ -157,6 +154,7 @@ function handleNewItemSubmit(evt) {
   const name = newItemTitleInput.value;
   const link = newItemLinkInput.value;
   renderCard({ name, link }, cardListEl);
+  evt.target.reset();
   closeModal(newItemModal);
 }
 newItemForm.addEventListener("submit", handleNewItemSubmit);
