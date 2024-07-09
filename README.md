@@ -9,6 +9,7 @@ This is the third project of the Software Engineering program at TripleTen. It w
 - Grid
 - Flat BEM file structure
 - Responsive design
+- JavaScript
 
 ## Figma
 
