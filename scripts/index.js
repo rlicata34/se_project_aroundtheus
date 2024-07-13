@@ -32,6 +32,8 @@ const initialCards = [
 /*                                  Elements                                  */
 /* -------------------------------------------------------------------------- */
 
+const allModals = document.querySelectorAll(".modal");
+
 /* --------------------------------- Profile -------------------------------- */
 
 const profileEditButton = document.querySelector("#profile-edit-button");
@@ -74,16 +76,35 @@ const previewImageTitle = previewImageModal.querySelector(
 );
 
 /* -------------------------------------------------------------------------- */
-/*                                  funtions                                  */
+/*                                  Open/close modal                          */
 /* -------------------------------------------------------------------------- */
 
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
+  document.removeEventListener("keydown", clickCloseESC);
 }
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
+  document.addEventListener("keydown", clickCloseESC);
 }
+
+function clickCloseESC(evt) {
+  if (evt.key === "Escape") {
+    const modal = document.querySelector(".modal_opened");
+    return closeModal(modal);
+  }
+}
+
+function clickCloseOverlay(evt) {
+  if (evt.target.classList.contains("modal")) {
+    closeModal(evt.target);
+  }
+}
+
+allModals.forEach((modal) => {
+  modal.addEventListener("click", clickCloseOverlay);
+});
 
 /* -------------------------------------------------------------------------- */
 /*                               Profile edit button                          */
