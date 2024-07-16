@@ -25,30 +25,33 @@ function hasInvalidInput(inputList) {
 }
 
 // disable button function
-function disableButton(submitButton) {
-  submitButton.classList.add("form__button_disabled");
+function disableButton(submitButton, options) {
+  const { inactiveButtonClass } = options;
+  submitButton.classList.add(inactiveButtonClass);
   submitButton.disabled = true;
 }
 
 // enable button function
-function enableButton(submitButton) {
-  submitButton.classList.remove("form__button_disabled");
+function enableButton(submitButton, options) {
+  const { inactiveButtonClass } = options;
+  submitButton.classList.remove(inactiveButtonClass);
   submitButton.disabled = false;
 }
 
-function toggleButtonState(inputEls, submitButton) {
+function toggleButtonState(inputEls, submitButton, options) {
   if (hasInvalidInput(inputEls)) {
-    disableButton(submitButton);
+    disableButton(submitButton, options);
     return;
   }
 
-  enableButton(submitButton);
+  enableButton(submitButton, options);
 }
 
 function setEventListeners(formEl, options) {
   const { inputSelector } = options;
   const inputEls = Array.from(formEl.querySelectorAll(inputSelector));
-  const submitButton = formEl.querySelector(".form__button");
+  const { submitButtonSelector } = options;
+  const submitButton = formEl.querySelector(submitButtonSelector);
 
   inputEls.forEach((inputEl) => {
     inputEl.addEventListener("input", () => {
