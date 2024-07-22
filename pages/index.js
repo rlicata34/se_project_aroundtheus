@@ -31,11 +31,6 @@ const initialCards = [
   },
 ];
 
-const cardData = {
-  name: "Vanoise National Park",
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
-};
-
 /* --------------------------- All modals element --------------------------- */
 
 const allModals = document.querySelectorAll(".modal");
@@ -107,7 +102,7 @@ function clickCloseOverlay(evt) {
 }
 
 allModals.forEach((modal) => {
-  modal.addEventListener("click", clickCloseOverlay);
+  modal.addEventListener("mousedown", clickCloseOverlay);
 });
 
 /* -------------------------------------------------------------------------- */
@@ -135,9 +130,13 @@ function handleProfileEditSubmit(evt) {
 /*                                Adding cards                                */
 /* -------------------------------------------------------------------------- */
 
+function createCard(cardData) {
+  const cardElement = new Card(cardData, "#card-template", handleImageClick);
+  return cardElement.getCardElement();
+}
+
 function renderCard(cardData, cardListEl) {
-  const card = new Card(cardData, "#card-template", handleImageClick);
-  const cardElement = card.getCardElement();
+  const cardElement = createCard(cardData);
   cardListEl.prepend(cardElement);
 }
 
@@ -187,10 +186,10 @@ const validationSettings = {
   errorClass: "form__error_visible",
 };
 
-const editFormEl = profileEditModal.querySelector(".modal__form");
-const addFormEl = newItemModal.querySelector(".modal__form");
-
-const editFormValidator = new FormValidator(validationSettings, editFormEl);
-const addFormValidator = new FormValidator(validationSettings, addFormEl);
+const editFormValidator = new FormValidator(
+  validationSettings,
+  profileEditForm
+);
+const addFormValidator = new FormValidator(validationSettings, newItemForm);
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
