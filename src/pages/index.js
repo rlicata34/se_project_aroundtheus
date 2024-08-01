@@ -17,8 +17,8 @@ import UserInfo from "../components/UserInfo.js";
 const profileEditButton = document.querySelector("#profile-edit-button");
 //const profileEditModal = document.querySelector("#profile-edit-modal");
 //const profileCloseButton = profileEditModal.querySelector(".modal__close");
-const profileTitle = document.querySelector(".profile__title");
-const profileDescription = document.querySelector(".profile__description");
+//const profileTitle = document.querySelector(".profile__title");
+//const profileDescription = document.querySelector(".profile__description");
 const profileEditForm = document.forms["profile-form"];
 const profileTitleInput = profileEditForm.querySelector(
   ".form__input_type_title"
@@ -29,7 +29,7 @@ const profileDescriptionInput = profileEditForm.querySelector(
 
 /* ---------------------------------- Card elements ---------------------------------- */
 
-const cardListEl = document.querySelector(".cards__list");
+//const cardListEl = document.querySelector(".cards__list");
 
 /* --------------------------------- newCard elements-------------------------------- */
 
@@ -148,11 +148,9 @@ newItemButton.addEventListener("click", () => {
 
 //newItemCloseButton.addEventListener("click", () => closeModal(newItemModal));
 
-function handleNewItemSubmit(userData) {
-  const name = userData.name;
-  const link = userData.url;
-  renderCard({ name, link }, cardListEl);
-  newItemForm.reset();
+function handleNewItemSubmit(inputValues) {
+  const cardData = { name: inputValues.title, link: inputValues.link };
+  cardSection.addItem(renderCard(cardData));
   newItemPopup.close();
   addFormValidator._disableButton();
 }
