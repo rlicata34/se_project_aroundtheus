@@ -13,14 +13,12 @@
       content="travel, experience, world, county, globe, blog"
     />
     <title>Around The U.S.</title>
-    <link rel="stylesheet" href="./pages/index.css" />
-    <link rel="shortcut icon" href="./favicon.ico" />
   </head>
   <body class="page">
     <div class="page__content">
       <header class="header page__section">
         <img
-          src="./images/aroundtheus-logo.svg"
+          src="<%=require('./images/aroundtheus-logo.svg')%>"
           alt="Around The US Logo"
           class="header__logo"
         />
@@ -28,7 +26,7 @@
       <main class="content">
         <section class="profile page__section">
           <img
-            src="./images/jacques-cousteau.png"
+            src="<%=require('./images/jacques-cousteau.png')%>"
             alt="Avatar"
             class="profile__image"
           />
@@ -152,6 +150,5 @@
         </li>
       </ul>
     </template>
-    <script defer src="./pages/index.js" type="module"></script>
   </body>
 </html>
