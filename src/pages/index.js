@@ -150,7 +150,8 @@ newItemButton.addEventListener("click", () => {
 
 function handleNewItemSubmit(inputValues) {
   const cardData = { name: inputValues.title, link: inputValues.link };
-  cardSection.addItem(renderCard(cardData));
+  console.log(cardData);
+  renderCard(cardData);
   newItemPopup.close();
   addFormValidator._disableButton();
 }
