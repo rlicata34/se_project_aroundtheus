@@ -83,7 +83,6 @@ function handleNewItemSubmit(inputValues) {
   const cardData = { name: inputValues.title, link: inputValues.link };
   renderCard(cardData);
   newItemPopup.close();
-  addFormValidator.disableButton();
 }
 
 /* ------------------------------ Preview image ----------------------------- */
