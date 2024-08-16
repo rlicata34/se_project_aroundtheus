@@ -15,12 +15,13 @@
   transition: opacity 0.3s ease, visibility 0s linear 0.3s;
 }
 
-.modal_opened {
+.modal_opened{
   display: flex;
   visibility: visible;
   opacity: 1;
   transition: visibility 0s, opacity 0.6s;
 }
+
 
 .modal__container {
   background-color: #fff;
@@ -54,6 +55,10 @@
   font-size: 24px;
   line-height: 1.23;
   margin: 0 0 54px;
+}
+
+#delete-card-heading {
+  margin: 0 0 38px;
 }
 
 .modal__container-image {

@@ -65,6 +65,10 @@
   cursor: pointer;
 }
 
+#delete-card-button {
+  margin: 0;
+}
+
 .form__button_disabled {
   background-color: #fff;
   color: rgba(0, 0, 0, 0.2);
