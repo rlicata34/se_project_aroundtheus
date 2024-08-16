@@ -30,7 +30,18 @@ const newItemSubmitButton = newItemForm.querySelector(".form__button");
 //const deleteCardForm = document.forms["delete-form"];
 //const deleteCardSubmitButton = deleteCardForm.querySelector("#delete-card-button");
 
+/* ----------------------------- Instantiate api ---------------------------- */
+
+const api = new Api ({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "5816dbaf-7235-416a-9b11-65ef8063db0b",
+    "Content-Type": "application/json"
+  },
+});
+
 /* ---------------------------- Profile edit form --------------------------- */
+
 
 const profileUserInfo = new UserInfo({
   nameEl: ".profile__title",
@@ -87,9 +98,17 @@ function renderCard(cardData) {
 }
 
 const cardSection = new Section(
-  { items: initialCards, renderer: renderCard },
+  {renderer: renderCard}, //removed initial cards
   ".cards__list"
 );
+
+/*api.getInitialCards() //use api
+  .then(() => {
+    cardSection.renderItems();
+  })
+  .catch((err) => {
+    console.error(err);
+  }) */
 
 cardSection.renderItems();
 
@@ -130,14 +149,14 @@ const deleteCardPopup = new PopupWithFormDelete({
 });
 deleteCardPopup.setEventListeners();
 
-function handleDeleteModal(cardData, cardElement) {
-  const cardId = cardData._id;
+function handleDeleteModal(cardData) {
+  //removed const
   deleteCardPopup.open();
   deleteCardPopup.setFormSubmitHandler(() => {
     api
-      .deleteCard(cardId)
+      .deleteCard(cardData._id) //replaced cardId with cardData._id
       .then(() => {
-        cardElement.deleteCard();
+        cardData.deleteCard(); //removed arguments
         deleteCardPopup.close();
       })
       .catch(console.error);
@@ -168,13 +187,6 @@ addFormValidator.enableValidation();
 
 /* ----------------------------------- Api ---------------------------------- */
 
-const api = new Api ({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1",
-  headers: {
-    authorization: "5816dbaf-7235-416a-9b11-65ef8063db0b",
-    "Content-Type": "application/json"
-  },
-});
 
 
 
