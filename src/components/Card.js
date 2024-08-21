@@ -3,7 +3,9 @@ export default class Card {
     { name, link,  _id }, //chaged from id
     cardSelector,
     handleImageClick,
-    handleDeleteCard
+    handleDeleteCard,
+    handleLikeIcon,
+    handleUnlikeIcon,
   ) {
     this._name = name;
     this._link = link;
@@ -11,19 +13,28 @@ export default class Card {
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
     this._handleDeleteCard = handleDeleteCard; // added handle to delete card
+    this._handleLikeIcon = handleLikeIcon; // handle placement for handle f() in index.js
+    this._handleUnlikeIcon = handleUnlikeIcon; // handle for unlike function
   }
 
   _setEventListeners() {
     this._likeButton = this._cardElement.querySelector(".card__like-button");
     this._likeButton.addEventListener("click", () => {
-      this._handleLikeIcon();
+      //check if like button inactive upon click
+      if(!this._likeButton.classList.contains("card__like-button_active")) {
+        return this._handleLikeIcon(this); //called from index.js
+      }
+      //if like button active when clicked
+      return this._handleUnlikeIcon(this);
     });
+
 
     this._deleteButton = this._cardElement.querySelector(
       ".card__delete-button"
     );
     this._deleteButton.addEventListener("click", () => {
-      this._handleDeleteCard(this); //removed id and added "this" to argument
+      //removed id and added "this" to argument
+      this._handleDeleteCard(this);
 
     });
 
@@ -31,11 +42,20 @@ export default class Card {
       this._handleImageClick({ name: this._name, link: this._link });
     });
   }
-  _handleLikeIcon() {
-    this._likeButton.classList.toggle("card__like-button_active");
+
+  //made public to call in index.js
+  likeIcon() {
+    this._likeButton.classList.add("card__like-button_active");
   }
 
-  deleteCard() { //changed from _handleDeleteCard
+  //to remove classList
+  unlikeIcon() {
+    this._likeButton.classList.remove("card__like-button_active");
+  }
+
+
+  //changed from _handleDeleteCard
+  deleteCard() {
     this._cardElement.remove();
     this._cardElement = null;
   }

@@ -1,6 +1,6 @@
 import "./index.css";
 import Api from "../components/Api.js";
-import { initialCards, validationSettings } from "../utils/constants.js";
+import { validationSettings } from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
@@ -24,6 +24,10 @@ const profileSubmitButton = profileEditForm.querySelector(".form__button");
 const newItemButton = document.querySelector("#new-item-button");
 const newItemForm = document.forms["card-form"];
 const newItemSubmitButton = newItemForm.querySelector(".form__button");
+
+const avatarEditButton = document.querySelector("#avatar-edit-icon");
+const avatarEditForm = document.forms["avatar-form"];
+const avatarEditSubmitButton = avatarEditForm.querySelector(".form__button");
 
 //const deleteCardIcon = document.querySelector(".card__delete-button");
 
@@ -54,6 +58,7 @@ const profileEditFormPopup = new PopupWithForm({
 });
 
 profileEditFormPopup.setEventListeners();
+console.log(profileEditFormPopup)
 
 profileEditButton.addEventListener("click", function () {
   const { name, description } = profileUserInfo.getUserInfo();
@@ -80,7 +85,43 @@ function handleProfileEditSubmit(userData) {
 
 }
 
+/* ---------------------------- Avatar edit form ---------------------------- */
+
+//new instantiation of UserInfo class for avatar pic
+const avatarUserInfo = new UserInfo({
+  avatarEl: ".profile__image",
+});
+
+const avatarEditFormPopup = new PopupWithForm({
+  popupSelector: "#avatar-edit-modal",
+  handleFormSubmit: handleAvatarEditSubmit,
+});
+avatarEditFormPopup.setEventListeners();
+console.log(avatarEditFormPopup);
+
+avatarEditButton.addEventListener("click", () => {
+  avatarEditFormPopup.open();
+})
+
+function handleAvatarEditSubmit(inputValue) {
+  const link = inputValue.link;
+  avatarEditSubmitButton.textContent = "Saving...";
+  api
+    .updateProfileAvatar(link)
+    .then(() => {
+      avatarUserInfo.setAvatarInfo({link}); //created new function in UserInfo
+      avatarEditFormPopup.close();
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      avatarEditSubmitButton.textContent = "Save";
+    })
+}
+
 /* ------------------------------ Adding cards ------------------------------ */
+
 
 function createCard(cardData) {
   const cardElement = new Card(
@@ -88,6 +129,8 @@ function createCard(cardData) {
     "#card-template",
     handleImageClick,
     handleDeleteModal,
+    handleLikeCard, //handle for like button
+    handleUnlikeCard, //handle for button unliked
   );
   return cardElement.getCardElement();
 }
@@ -98,25 +141,22 @@ function renderCard(cardData) {
 }
 
 const cardSection = new Section(
-  {renderer: renderCard}, //removed initial cards
-  ".cards__list"
+    {renderer: renderCard}, //removed initial cards
+    ".cards__list"
 );
 
-/*api.getInitialCards() //use api
-  .then(() => {
-    cardSection.renderItems();
-  })
-  .catch((err) => {
-    console.error(err);
-  }) */
 
-cardSection.renderItems();
+api.getInitialCards().then((cards) => {
+    cardSection.renderItems(cards);
+  })
+
 
 const newItemPopup = new PopupWithForm({
   popupSelector: "#new-item-modal",
   handleFormSubmit: handleNewItemSubmit,
 });
 newItemPopup.setEventListeners();
+console.log(newItemPopup)
 
 newItemButton.addEventListener("click", () => {
   newItemPopup.open();
@@ -137,9 +177,35 @@ function handleNewItemSubmit(inputValues) {
       console.error(err);
     })
     .finally(() => {
-      newItemButton.textContent = "Save";
+      newItemSubmitButton.textContent = "Save";
     })
 
+}
+
+/* ------------------------------- liking card ------------------------------ */
+
+function handleLikeCard(cardData) {
+  api
+    .likeCard(cardData._id)
+    .then(() => {
+      cardData.likeIcon();
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+}
+
+/* ------------------------------- unLike card ------------------------------ */
+
+function handleUnlikeCard(cardData) {
+  api
+    .unlikeCard(cardData._id)
+    .then(() => {
+      cardData.unlikeIcon();
+    })
+    .catch((err) => {
+      console.error(err);
+    })
 }
 
 /* ------------------------------ Deleting card ----------------------------- */
@@ -177,15 +243,16 @@ function handleImageClick(cardData) {
 
 /* ----------------------------- Form validation ---------------------------- */
 
-const editFormValidator = new FormValidator(
-  validationSettings,
-  profileEditForm
+const editFormValidator = new FormValidator(validationSettings, profileEditForm
 );
 const addFormValidator = new FormValidator(validationSettings, newItemForm);
+const avatarFormValidator = new FormValidator(validationSettings, avatarEditForm);
+
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
+avatarFormValidator.enableValidation();
 
-/* ----------------------------------- Api ---------------------------------- */
+
 
 
 
