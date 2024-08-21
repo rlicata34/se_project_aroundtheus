@@ -46,7 +46,6 @@ const api = new Api ({
 
 /* ---------------------------- Profile edit form --------------------------- */
 
-
 const profileUserInfo = new UserInfo({
   nameEl: ".profile__title",
   jobEl: ".profile__description",
@@ -58,7 +57,6 @@ const profileEditFormPopup = new PopupWithForm({
 });
 
 profileEditFormPopup.setEventListeners();
-console.log(profileEditFormPopup)
 
 profileEditButton.addEventListener("click", function () {
   const { name, description } = profileUserInfo.getUserInfo();
@@ -72,9 +70,15 @@ function handleProfileEditSubmit(userData) {
   const description = userData.description;
   profileSubmitButton.textContent = "Saving...";
   api.updateUserInfo(name, description)
-    .then(() => {
-      profileUserInfo.setUserInfo({ name, description });
+    .then((newUserData) => {
+      //newUserData includes user's id
+      profileUserInfo.setUserInfo({
+        name: newUserData.name,
+        description: newUserData.about,
+        id: newUserData._id, //capture user id
+      });
       profileEditFormPopup.close();
+      console.log(newUserData._id);
     })
     .catch((err) => {
       console.error(err);
@@ -97,7 +101,6 @@ const avatarEditFormPopup = new PopupWithForm({
   handleFormSubmit: handleAvatarEditSubmit,
 });
 avatarEditFormPopup.setEventListeners();
-console.log(avatarEditFormPopup);
 
 avatarEditButton.addEventListener("click", () => {
   avatarEditFormPopup.open();
@@ -107,7 +110,7 @@ function handleAvatarEditSubmit(inputValue) {
   const link = inputValue.link;
   avatarEditSubmitButton.textContent = "Saving...";
   api
-    .updateProfileAvatar(link)
+    .updateProfileAvatar(inputValue.link)
     .then(() => {
       avatarUserInfo.setAvatarInfo({link}); //created new function in UserInfo
       avatarEditFormPopup.close();
@@ -146,7 +149,9 @@ const cardSection = new Section(
 );
 
 
-api.getInitialCards().then((cards) => {
+api
+  .getInitialCards()
+  .then((cards) => {
     cardSection.renderItems(cards);
   })
 
@@ -156,21 +161,16 @@ const newItemPopup = new PopupWithForm({
   handleFormSubmit: handleNewItemSubmit,
 });
 newItemPopup.setEventListeners();
-console.log(newItemPopup)
 
 newItemButton.addEventListener("click", () => {
   newItemPopup.open();
 });
 
 function handleNewItemSubmit(inputValues) {
-  const cardData = {
-    name: inputValues.title,
-    link: inputValues.link,
-  };
   newItemSubmitButton.textContent = "Saving...";
   api.addNewCard(inputValues.title, inputValues.link)
-    .then(() => {
-      renderCard(cardData);
+    .then((newCardData) => {
+      renderCard(newCardData);
       newItemPopup.close();
     })
     .catch((err) => {
@@ -182,7 +182,7 @@ function handleNewItemSubmit(inputValues) {
 
 }
 
-/* ------------------------------- liking card ------------------------------ */
+/* ------------------------------- like card ------------------------------ */
 
 function handleLikeCard(cardData) {
   api
@@ -208,7 +208,7 @@ function handleUnlikeCard(cardData) {
     })
 }
 
-/* ------------------------------ Deleting card ----------------------------- */
+/* ------------------------------ Delete card ----------------------------- */
 
 const deleteCardPopup = new PopupWithFormDelete({
   popupSelector: "#delete-card-modal",
@@ -218,6 +218,7 @@ deleteCardPopup.setEventListeners();
 function handleDeleteModal(cardData) {
   //removed const
   deleteCardPopup.open();
+  console.log(cardData._id);
   deleteCardPopup.setFormSubmitHandler(() => {
     api
       .deleteCard(cardData._id) //replaced cardId with cardData._id
@@ -228,7 +229,6 @@ function handleDeleteModal(cardData) {
       .catch(console.error);
   });
 
-  deleteCardPopup.open();
 }
 
 

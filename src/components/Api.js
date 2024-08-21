@@ -8,7 +8,7 @@ export default class Api {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(`Error: ${res.status}`);
+    return Promise.reject(`Error: ${res.status}, ${error.message}`);
   }
 
 
@@ -27,8 +27,10 @@ export default class Api {
   getUserAndCards() {
     return Promise.all([this.getUserInfo(), this.getInitialCards()])
       .then(([userInfo, cards]) => {
-        console.log([userInfo, cards]);
         return { userInfo, cards };
+      })
+      .catch((err) => {
+        console.error('Error in getUserAndCards:', err);
       });
   }
 
