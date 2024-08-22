@@ -16,6 +16,7 @@ export default class Card {
     this._handleDeleteCard = handleDeleteCard; // added handle to delete card
     this._handleLikeIcon = handleLikeIcon; // handle placement for handle f() in index.js
     this._handleUnlikeIcon = handleUnlikeIcon; // handle for unlike function
+
   }
 
   _setEventListeners() {
