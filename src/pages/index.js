@@ -133,7 +133,7 @@ function handleAvatarEditSubmit(inputValue) {
   api
     .updateProfileAvatar(link)
     .then((newUserData) => {
-      avatarUserInfo.setAvatarInfo(newUserData.link); //created new function in UserInfo
+      avatarUserInfo.setAvatarInfo({ link: newUserData.avatar}); //created new function in UserInfo
       avatarEditFormPopup.close();
     })
     .catch((err) => {
