@@ -49,6 +49,7 @@ const api = new Api ({
 const profileUserInfo = new UserInfo({
   nameEl: ".profile__title",
   jobEl: ".profile__description",
+  avatarEl: ".profile__image",
 });
 
 const profileEditFormPopup = new PopupWithForm({
@@ -58,12 +59,32 @@ const profileEditFormPopup = new PopupWithForm({
 
 profileEditFormPopup.setEventListeners();
 
+api
+  .getUserInfo()
+  .then((userData) => {
+    profileUserInfo.setUserInfo({
+      name: userData.name,
+      description: userData.about,
+    })
+    profileUserInfo.setAvatarInfo({
+      link: userData.avatar,
+    })
+  })
+
 profileEditButton.addEventListener("click", function () {
   const { name, description } = profileUserInfo.getUserInfo();
   profileTitleInput.value = name;
   profileDescriptionInput.value = description;
   profileEditFormPopup.open();
 });
+
+
+/*api
+  .getInitialCards()
+  .then((cards) => {
+    cardSection.renderItems(cards);
+  })*/
+
 
 function handleProfileEditSubmit(userData) {
   const name = userData.title;
@@ -110,9 +131,9 @@ function handleAvatarEditSubmit(inputValue) {
   const link = inputValue.link;
   avatarEditSubmitButton.textContent = "Saving...";
   api
-    .updateProfileAvatar(inputValue.link)
-    .then(() => {
-      avatarUserInfo.setAvatarInfo({link}); //created new function in UserInfo
+    .updateProfileAvatar(link)
+    .then((newUserData) => {
+      avatarUserInfo.setAvatarInfo(newUserData.link); //created new function in UserInfo
       avatarEditFormPopup.close();
     })
     .catch((err) => {
