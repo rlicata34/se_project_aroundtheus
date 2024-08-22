@@ -188,7 +188,7 @@ function handleLikeCard(cardData) {
   api
     .likeCard(cardData._id)
     .then(() => {
-      cardData.setCardLike(false);
+      cardData.setCardLike(true);
     })
     .catch((err) => {
       console.error(err);
@@ -201,7 +201,7 @@ function handleUnlikeCard(cardData) {
   api
     .unlikeCard(cardData._id)
     .then(() => {
-      cardData.setCardLike(true);
+      cardData.setCardLike(false);
     })
     .catch((err) => {
       console.error(err);

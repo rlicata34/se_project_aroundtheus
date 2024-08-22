@@ -22,7 +22,7 @@ export default class Card {
     this._likeButton = this._cardElement.querySelector(".card__like-button");
     this._likeButton.addEventListener("click", () => {
       //check if like button inactive upon click
-      if(this._isLiked === true) {
+      if(this._isLiked === false) {
         return this._handleLikeIcon(this); //called from index.js
       }
       //if like button active when clicked
@@ -44,11 +44,12 @@ export default class Card {
     });
   }
 
-  //made public to call in index.js
+  //changes status of current card
   setCardLike(isLiked){
     this._isLiked = isLiked;
     this.renderCardLike();
   }
+  //renders corresponding icon depending on isLiked status
   renderCardLike(){
     if(this._isLiked){
       this._likeButton.classList.remove("card__like-button_active");
@@ -73,6 +74,7 @@ export default class Card {
     this._cardImageEl.src = this._link;
     this._cardImageEl.alt = this._name;
     this._cardTitleEl.textContent = this._name;
+    this.renderCardLike();
     this._setEventListeners();
     return this._cardElement;
   }
