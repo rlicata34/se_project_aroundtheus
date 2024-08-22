@@ -1,12 +1,13 @@
 export default class Card {
   constructor(
-    { name, link,  _id }, //chaged from id
+    { name, link,  _id, isLiked }, //recieve isLiked and _id from api card
     cardSelector,
     handleImageClick,
     handleDeleteCard,
     handleLikeIcon,
     handleUnlikeIcon,
   ) {
+    this._isLiked = isLiked;
     this._name = name;
     this._link = link;
     this._id = _id; // added id for deleting card
@@ -21,7 +22,7 @@ export default class Card {
     this._likeButton = this._cardElement.querySelector(".card__like-button");
     this._likeButton.addEventListener("click", () => {
       //check if like button inactive upon click
-      if(!this._likeButton.classList.contains("card__like-button_active")) {
+      if(this._isLiked === true) {
         return this._handleLikeIcon(this); //called from index.js
       }
       //if like button active when clicked
@@ -44,15 +45,17 @@ export default class Card {
   }
 
   //made public to call in index.js
-  likeIcon() {
-    this._likeButton.classList.add("card__like-button_active");
+  setCardLike(isLiked){
+    this._isLiked = isLiked;
+    this.renderCardLike();
   }
-
-  //to remove classList
-  unlikeIcon() {
-    this._likeButton.classList.remove("card__like-button_active");
+  renderCardLike(){
+    if(this._isLiked){
+      this._likeButton.classList.remove("card__like-button_active");
+    } else {
+      this._likeButton.classList.add("card__like-button_active");
+    }
   }
-
 
   //changed from _handleDeleteCard
   deleteCard() {
@@ -70,9 +73,7 @@ export default class Card {
     this._cardImageEl.src = this._link;
     this._cardImageEl.alt = this._name;
     this._cardTitleEl.textContent = this._name;
-
     this._setEventListeners();
-
     return this._cardElement;
   }
 }

@@ -7,7 +7,7 @@ import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
-import PopupWithFormDelete from "../components/PopupWithFormDelete";
+import PopupWithFormDelete from "../components/PopupWithFormDelete.js";
 
 /* -------------------------------- Elements -------------------------------- */
 
@@ -188,7 +188,7 @@ function handleLikeCard(cardData) {
   api
     .likeCard(cardData._id)
     .then(() => {
-      cardData.likeIcon();
+      cardData.setCardLike(false);
     })
     .catch((err) => {
       console.error(err);
@@ -201,7 +201,7 @@ function handleUnlikeCard(cardData) {
   api
     .unlikeCard(cardData._id)
     .then(() => {
-      cardData.unlikeIcon();
+      cardData.setCardLike(true);
     })
     .catch((err) => {
       console.error(err);
