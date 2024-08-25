@@ -14,7 +14,6 @@ import {
   newItemForm,
   avatarEditButton,
   avatarEditForm,
-  avatarEditSubmitButton,
 }
 from "../utils/constants.js";
 import Card from "../components/Card.js";
@@ -110,7 +109,6 @@ function handleSubmit(request, popupInstance, loadingText = "Saving...") {
   popupInstance.renderLoading(true, loadingText);
   request()
     .then(() => {
-      // We need to close only in `then`
       popupInstance.close()
     })
     .catch(console.error)
@@ -139,10 +137,11 @@ function handleProfileEditSubmit(userData) {
 
 function handleAvatarEditSubmit(inputValue) {
   const link = inputValue.link;
-  avatarEditSubmitButton.textContent = "Saving...";
   function makeRequest() {
     return api.updateProfileAvatar(link)
     .then((newUserData) => {
+      formValidators["avatar-edit-form"].resetValidation();
+      formValidators["avatar-edit-form"].disableButton();
       avatarUserInfo.setAvatarInfo({ link: newUserData.avatar});
       avatarEditForm.reset();
     });
@@ -156,8 +155,9 @@ function handleNewItemSubmit(inputValues) {
   function makeRequest() {
     return api.addNewCard(inputValues.title, inputValues.link)
     .then((newCardData) => {
+      formValidators["new-item-form"].resetValidation();
+      formValidators["new-item-form"].disableButton();
       renderCard(newCardData);
-      newItemPopup.close();
       newItemForm.reset();
     });
   }
@@ -213,29 +213,22 @@ function handleImageClick(cardData) {
 profileEditFormPopup.setEventListeners();
 
 profileEditButton.addEventListener("click", function () {
+  formValidators["profile-edit-form"].resetValidation();
   const { name, description } = profileUserInfo.getUserInfo();
   profileTitleInput.value = name;
   profileDescriptionInput.value = description;
-  formValidators["profile-edit-form"].resetValidation();
-  formValidators["profile-edit-form"].disableButton();
   profileEditFormPopup.open();
 });
 
 avatarEditFormPopup.setEventListeners();
 
 avatarEditButton.addEventListener("click", () => {
-  formValidators["avatar-edit-form"].resetValidation();
-  formValidators["avatar-edit-form"].disableButton();
-  avatarEditForm.reset();
   avatarEditFormPopup.open();
 })
 
 newItemPopup.setEventListeners();
 
 newItemButton.addEventListener("click", () => {
-  formValidators["new-item-form"].resetValidation();
-  formValidators["new-item-form"].disableButton();
-  newItemForm.reset();
   newItemPopup.open();
 });
 

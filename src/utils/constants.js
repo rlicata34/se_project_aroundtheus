@@ -23,4 +23,3 @@ export const newItemForm = document.forms["card-form"];
 
 export const avatarEditButton = document.querySelector("#avatar-edit-icon");
 export const avatarEditForm = document.forms["avatar-form"];
-export const avatarEditSubmitButton = avatarEditForm.querySelector(".form__button");
