@@ -4,12 +4,38 @@
   margin-top: 40px;
 }
 
+.profile__image-container {
+  position: relative;
+  display: flex;
+}
+
 .profile__image {
   border-radius: 50%;
   height: 120px;
   width: 120px;
   object-fit: cover;
   background-position: center;
+}
+
+.profile__avatar-edit {
+  position: absolute;
+  top: 47px;
+  left: 47px;
+  width: 26px;
+  height: 26px;
+  background: transparent url(../images/edit-avatar-icon.svg) center no-repeat;
+  border: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.profile__image-container:hover .profile__image {
+  opacity: 60%;
+}
+
+.profile__image-container:hover .profile__avatar-edit {
+  opacity: 1;
+  cursor: pointer;
 }
 
 .profile__info {

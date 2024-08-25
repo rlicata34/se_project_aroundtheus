@@ -1,33 +1,66 @@
 export default class Card {
-  constructor({ name, link }, cardSelector, handleImageClick) {
+  constructor(
+    { name, link,  _id, isLiked }, //recieve isLiked and _id from api card
+    cardSelector,
+    handleImageClick,
+    handleDeleteCard,
+    handleLikeIcon,
+    handleUnlikeIcon,
+  ) {
+    this._isLiked = isLiked;
     this._name = name;
     this._link = link;
+    this._id = _id; // added id for deleting card
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
+    this._handleDeleteCard = handleDeleteCard; // added handle to delete card
+    this._handleLikeIcon = handleLikeIcon; // handle placement for handle f() in index.js
+    this._handleUnlikeIcon = handleUnlikeIcon; // handle for unlike function
+
   }
 
   _setEventListeners() {
     this._likeButton = this._cardElement.querySelector(".card__like-button");
     this._likeButton.addEventListener("click", () => {
-      this._handleLikeIcon();
+      //check if like button inactive upon click
+      if(!this._isLiked) {
+        return this._handleLikeIcon(this); //called from index.js
+      }
+      //if like button active when clicked
+      return this._handleUnlikeIcon(this);
     });
+
 
     this._deleteButton = this._cardElement.querySelector(
       ".card__delete-button"
     );
     this._deleteButton.addEventListener("click", () => {
-      this._handleDeleteCard();
+      //removed id and added "this" to argument
+      this._handleDeleteCard(this);
+
     });
 
     this._cardImageEl.addEventListener("click", () => {
       this._handleImageClick({ name: this._name, link: this._link });
     });
   }
-  _handleLikeIcon() {
-    this._likeButton.classList.toggle("card__like-button_active");
+
+  //changes status of current card
+  setCardLike(isLiked){
+    this._isLiked = isLiked;
+    this.renderCardLike();
+  }
+  //renders corresponding icon depending on isLiked status
+  renderCardLike(){
+    if(!this._isLiked){
+      this._likeButton.classList.remove("card__like-button_active");
+    } else {
+      this._likeButton.classList.add("card__like-button_active");
+    }
   }
 
-  _handleDeleteCard() {
+  //changed from _handleDeleteCard
+  deleteCard() {
     this._cardElement.remove();
     this._cardElement = null;
   }
@@ -42,9 +75,8 @@ export default class Card {
     this._cardImageEl.src = this._link;
     this._cardImageEl.alt = this._name;
     this._cardTitleEl.textContent = this._name;
-
     this._setEventListeners();
-
+    this.renderCardLike();
     return this._cardElement;
   }
 }
