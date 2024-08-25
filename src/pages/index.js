@@ -140,7 +140,6 @@ function handleAvatarEditSubmit(inputValue) {
   function makeRequest() {
     return api.updateProfileAvatar(link)
     .then((newUserData) => {
-      formValidators["avatar-edit-form"].resetValidation();
       formValidators["avatar-edit-form"].disableButton();
       avatarUserInfo.setAvatarInfo({ link: newUserData.avatar});
       avatarEditForm.reset();
@@ -155,7 +154,6 @@ function handleNewItemSubmit(inputValues) {
   function makeRequest() {
     return api.addNewCard(inputValues.title, inputValues.link)
     .then((newCardData) => {
-      formValidators["new-item-form"].resetValidation();
       formValidators["new-item-form"].disableButton();
       renderCard(newCardData);
       newItemForm.reset();
